@@ -45,12 +45,13 @@ From there, check out the gallery of games submitted by teenagers from all over 
 
 Note that you can choose any game in the gallery to see its code. In fact, this is a great way to learn coding– see how other hackers solved their game design problems!
 
-You’re now in the Sprig code editor! Hitting the RUN button runs the current code, and allows you to play the game. Fun hint: the size of your editor and play window can be adjusted.
+You’re now in the Sprig code editor! Hitting the RUN button runs the current code, and allows you to play the game.  
+Fun hint: the size of your editor and play window can be adjusted.
 
 
-### Tip: How to NOT lose work in progress
+### Make sure you don't lose your progress
 
-Work in progress is stored in your browser cache, and trust us, it SUCKS to lose your work.
+You'll want to register with Sprig to save your work! Otherwise, logging out of your computer could clear your work (this is not fun!!).
 
 In the login page, enter your email. A login code will be sent.
 
