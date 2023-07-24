@@ -1,19 +1,26 @@
-## Easy:
-[x] Keys and locks (limited to one pair per level): https://sprig.hackclub.com/share/rCaNPodIKbD7AdVZDktY  
-[x] Pushboxes: https://sprig.hackclub.com/share/X8s5y3FJE0b3nWUaMfXt  
-[x] Step limit: https://sprig.hackclub.com/share/bGEs4HXLqVI1tiJr94Ot  
-[x] Traps (die on touch): https://sprig.hackclub.com/share/gExM4DPrFp0OXwhOhPmQ  
-## Medium
-[ ] Portals (limited to one pair per level): https://sprig.hackclub.com/share/qKV04fz82ZrAad6nGoBs  
-[ ] Fragile tiles: https://sprig.hackclub.com/share/x89g2ixRC6jh5f0PJ6tg  
-[x] Two player: https://sprig.hackclub.com/share/ICFghkZf02qGlOBpNMbl   
-## Hard
-[x] Moving obstacles  (could this be made medium?)  
-[x] Sliding movement (you can’t stop until you hit a wall)
+# Take your Sprig game to the next level with traps, moving obstacles, and more.
 
-TODO: introduction. for now, the plan is to pick two of varying difficulty and add them to your game (1 or 2 sessions)
+### this should take two sessions in a club!
 
-## Beginning:
+Last session, you built your very own maze game from scratch! (if this isn't true, check out [session 2](LINK AAAA TODO) of this jam!) Today, we'll be expanding on our game by adding various game mechanics, or features. Take a look at the list of examples below, and make note of what seems fun/interesting/inspiring to you!
+
+### List of game mechanics
+- Beginning
+  - [Keys and locks](https://sprig-nocode.hackclub.dev/maze_keylock)
+  - [Pushboxes](https://sprig-nocode.hackclub.dev/maze_pushbox)
+  - [Step limit](https://sprig-nocode.hackclub.dev/maze_steps)
+  - [Traps](https://sprig-nocode.hackclub.dev/maze_traps)
+- Intermediate
+  - [Portals](https://sprig-nocode.hackclub.dev/maze_portals)
+  - [Fragile tiles](https://sprig-nocode.hackclub.dev/maze_fragile_tiles)
+  - [Two player](https://sprig-nocode.hackclub.dev/maze_twoplayers)
+- Advanced
+  - [Moving obstacles](https://sprig-nocode.hackclub.dev/maze_moving_obstacles)
+  - [Sliding movement](https://sprig-nocode.hackclub.dev/maze_jumps)
+
+During these next two sessions, you'll be choosing two game mechanics to implement in your own game! Choose two of varying difficulty levels, and try your best to figure out how to implement them on your own, but don't be afraid to make use of the hints and those around you! Think about how you can combine different game mechanics to play into a cohesive game, and think about how you can build a story around the ones you choose.
+
+## Beginning
 ### Keys and locks
 ![](https://cloud-mswaasys4-hack-club-bot.vercel.app/0screen_recording_2023-07-13_at_11.12.28.gif)
 
@@ -30,7 +37,7 @@ Look back to how we implemented goal detection in step 5 of session 2 (use an `i
 <details>
 <summary>How can I remove the lock and key once they're picked up?</summary>
 
-Search the toolkit for the sprites section, and take a look at the remove function on sprites.
+Search the toolkit for the sprites section, and take a look at the remove function on sprites (use `getFirst` to access the sprites for the key and the lock).
 </details>
 
 <details>
@@ -133,7 +140,7 @@ const levelLimits = [
 ]
 ```
 
-Then, you can access the step limit for a certain level with `levelLimits[level]` or `levelLimits[0]`
+Then, you can access the step limit with `levelLimits[level]` for the current level or `levelLimits[0]` for a specific level (0 in this case).
 </details>
 
 <details>
@@ -165,7 +172,7 @@ coolFunction();
 <details>
 <summary>How do I reset the level once the counter hits zero?</summary>
 
-After every input, you'll want to use an `if` statement where you check if the counter equals zero. If it does, reset the level in the same way that it's reset in step 3 of session 2.
+After every input, you'll want to use an `if` statement where you check if the counter equals zero. If it does, reset the level in the same way that it's reset in step 3 of session 2 (using `setMap`).
 </details>
 
 <details>
@@ -218,7 +225,7 @@ Look back to how we implemented goal detection in step 5 of session 2 (use an `i
 <details>
 <summary>How can I reset the level?</summary>
 
-Take a look at how we reset the level in step 3 of session 2!
+Take a look at how we reset the level in step 3 of session 2! Use `setMap` with the current level.
 </details>
 
 <details>
@@ -249,18 +256,105 @@ afterInput(() => {
 ### Portals
 ![](https://cloud-7roc3qdvf-hack-club-bot.vercel.app/0screen_recording_2023-07-13_at_11.29.05.gif)
 
-Add sets of portals to your game, which teleport you to the other portal when you step on them!
+Add sets of portals to your game, which teleport you to the other portal when you step on them! To do this, create sprites for red and blue portals (or substitute with your own colors/designs!), then detect if the player is over a red or blue portal after every input, then teleport them if they are over a portal.
 
-### Fragile tiles
-![](https://cloud-dpqbnhs4n-hack-club-bot.vercel.app/0screen_recording_2023-07-13_at_11.31.43.gif)
+<details>
+<summary>How can I run code depending on if my player goes over a portal?</summary>
 
-Add tiles that you can only walk over once before turning into holes that you fall through that reset the level!
+We can use `tilesWith` (check the toolkit) similarly to how we implemented goal detection. Make sure you check both for red and blue portals and store numbers for each in different variables.
 
-#### Hints:
+Then, use an `if` statement to run code depending on if the player is over a portal, like this:
+```js
+if (overlappingBluePortals.length >= 1) { // your variable name could be anything
+    // run code to teleport the player
+}
+
+// do this again for red portals!
+```
+</details>
+
+<details>
+<summary>How can I teleport the player?</summary>
+
+Take a look at the `Sprites and Tiles` section of the toolkit! (change the x & y values of your player to where the goal is; get the goal's position using `getFirst`!)
+</details>
 
 <details>
 <summary>I've tried my best. Show solution.</summary>
 
+```js
+afterInput(() => {
+  const redPortalsCovered = tilesWith(player, redPortal);
+  const bluePortalsCovered = tilesWith(player, bluePortal);
+  
+  // ADDED: teleport the player to the blue portal if they are standing on the red one
+  if (redPortalsCovered.length >= 1) {
+    const bp = getFirst(bluePortal);
+    const pl = getFirst(player);
+
+    // teleport player to blue portal
+    pl.x = bp.x;
+    pl.y = bp.y;
+  }
+
+  // ADDED: teleport the player to the red portal if they are standing on the blue one
+  if (bluePortalsCovered.length >= 1) {
+    const rp = getFirst(redPortal);
+    const pl = getFirst(player);
+
+    // teleport player to blue portal
+    pl.x = rp.x;
+    pl.y = rp.y;
+  }
+  
+  /* your other code */
+    
+});
+```
+</details>
+
+### Fragile tiles
+![](https://cloud-dpqbnhs4n-hack-club-bot.vercel.app/0screen_recording_2023-07-13_at_11.31.43.gif)
+
+Add tiles that you can only walk over once before turning into holes that you fall through that reset the level! To do this, create two sprites for fragile and broken tiles. Then, after every input, check if the previous tile was fragile, and if so change it to broken. If the current tile is ever broken, reset the level.
+
+#### Hints:
+
+<details>
+<summary>How can I check if the tile my player was previously on was fragile?</summary>
+
+TODO!!! fix toolkit to include sprite.dx/dy  
+
+To find which tile your player was previously on, search the toolkit for `Sprites and Tiles` and take a look at the section regarding dx & dy. Take your current position and subtract the distance you just moved to find your previous position.
+
+Then, take that position and use `getTile(x,y)[0].type` to get the type of tile you were previously on, and use `==` to check if it is fragile.
+</details>
+
+<details>
+<summary>I've tried my best. Show solution.</summary>
+
+```js
+afterInput(() => {
+  const brokenCovered = tilesWith(player, broken); // ADDED: tiles with players on broken tiles
+
+  // ADDED: check if the player was previously on a fragile tile
+  const pl = getFirst(player);
+  const previousX = pl.x - pl.dx;
+  const previousY = pl.y - pl.dy;
+  // check if the previous tile is a fragile one
+  const sprite = getTile(previousX, previousY)[0]; // an array of sprites on that tile
+    if (sprite.type === fragile) {
+      sprite.type = broken;
+    }
+
+  // ADDED: check if the player is on top of a broken tile
+  if (brokenCovered.length >= 1) {
+    lose();
+  }
+  
+  /* your existing code */
+});
+```
 </details>
 
 ### Two player
@@ -337,7 +431,7 @@ afterInput(() => {
 ### Moving obstacles
 ![](https://cloud-lalg1dbq4-hack-club-bot.vercel.app/0screen_recording_2023-07-13_at_12.49.00__1_.gif)
 
-Add an obstacle that moves back and forth in a level on a set interval! In order to do this, repeatedly check which level you're on and add or remove certain tiles depending on which level you're on and where the obstacle was previously. Also, make sure not to run into the player!
+Add an obstacle that moves back and forth in a level on a set interval! In order to do this, repeatedly check which level you're on and add or remove certain tiles depending on which level you're on (use `if (level == 3)` for level 3, for example) and where the obstacle was previously. Also, make sure not to run into the player!
 
 <details>
 <summary>How can I run a block of code on a set interval?</summary>
@@ -358,7 +452,7 @@ setInterval(() => {
 
 Create a variable using `let` on the top level of the game (outside any functions or code blocks), name it something like "obstacleIsUp", and set it to true.
 
-Then, use an `if` statement to run different code depending on which level you're on, and use another `if` statement to move the obstacle up or down depending on if the variable you just declared equals true or false. Each time you move the obstacle, flip that variable to the opposite of what it was.
+Then, use an `if` statement to run different code depending on which level you're on, and use another `if` statement to move the obstacle up or down depending on if the variable you just declared equals true or false. Each time you move the obstacle, flip that variable to the opposite of what it was previously.
 
 </details>
 
@@ -367,9 +461,7 @@ Then, use an `if` statement to run different code depending on which level you'r
 
 Simply use `addSprite` and `clearTile` (search the toolkit) to add and remove the tiles that are different between each move.
 
-Also, use an if statement to check if there's a player where you'll add sprites (using `tilesWith`; look back to how we did goal detection!).
-
-Don't move if there's a player in the way! Create a function to check if a player is at a certain X & Y, like this:
+Also, use an if statement to check if there's a player where you'll add sprites. Create a function to check if a player is at a certain X & Y, like this:
 ```js
 function checkForPlayer(x,y) { // this function accepts two paramaters: x & y
   let result = false
@@ -380,7 +472,9 @@ function checkForPlayer(x,y) { // this function accepts two paramaters: x & y
   return result // this function returns true only if there is a player at (x,y)
 }
 
-checkForPlayer(3,2) // this is how we call the function
+if (!checkForPlayer(3,2)) { // this is how we call the function; this will be true or false. you can use && (logical AND) to combine multiple checks for different tiles
+    // this code is run if there is not a player at 3,2  
+}
 ```
 </details>
 
@@ -451,11 +545,11 @@ You'll want to move to one direction **while** there **is not** a block or edge 
 
 The player will need to stop when there is a wall directly ahead of them in the direction they're travelling, or they're about to overstep the map.
 
-To detect if the player is about to overstep the map, use `getFirst(player).y > 0` if you're travelling up or left (and adapt using `x` instead of `y`) or `getFirst(player).y < height() - 1` if you're travelling down or right (and adapt using `x` and `width()`)
+To detect if the player is about to overstep the map, use `getFirst(player).y > 0` if you're travelling up or left (and adapt using `x` instead of `y` for horizontal movement) or `getFirst(player).y < height() - 1` if you're travelling down or right (and adapt using `x` and `width()` for horizontal movement)
 
 To detect if the player is about to hit a wall, check if the tile ahead is empty (use `getTile(x,y)[0] == undefined`, substituting x and y for whatever the coordinates of the player are plus an offset in the direction they're going) OR that its type does not equal wall (`getTile(x,y)[0].type != wall`).
 
-Combine these two statements with `&&` and use them in your while loop.
+Combine these two statements with `&&` (this is the logical AND operator) and use them in your while loop.
 </details>
 
 <details>

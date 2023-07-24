@@ -63,7 +63,6 @@ Use the code sent to you to log in. Make sure to check your spam folders.
 
 Congrats! You’re now logged in. To access your saved games, use the same email to log in.
 
-
 ## 3. Build Your First Game!
 Click on the gallery up top.
 
