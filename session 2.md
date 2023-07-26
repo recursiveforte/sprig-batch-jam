@@ -262,6 +262,5 @@ afterInput(() => {
 ## Wrap-up!
 Congratulations!! By finishing this tutorial, you just made your own game from scratch!
 
-TODO: celebratory meme
-
+![](https://cloud-bsg8pyzmi-hack-club-bot.vercel.app/0screenshot_2023-07-26_at_15.27.47.png)
 Next session, we'll be adding custom game mechanics to our game! Take a look at the game mechanics list for some examples of what we'll add (TODO!)
